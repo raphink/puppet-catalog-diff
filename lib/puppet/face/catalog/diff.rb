@@ -155,6 +155,7 @@ Puppet::Face.define(:catalog, '0.0.1') do
       nodes[:most_differences]   = most_differences.reverse.take((options.has_key?(:changed_depth) && options[:changed_depth].to_i || 10))
       nodes[:total_nodes]        = total_nodes
       nodes[:date]               = Time.new.to_s
+      nodes[:fact_search]        = options[:fact_search]
       nodes
     end
 
@@ -163,7 +164,7 @@ Puppet::Face.define(:catalog, '0.0.1') do
 
       format = Puppet::CatalogDiff::Formater.new()
       nodes.collect do |node,summary|
-      next if node == :total_percentage or node == :total_nodes or node == :most_changed or node == :with_changes or node == :most_differences or node == :pull_output or node == :date
+      next if node == :total_percentage or node == :total_nodes or node == :most_changed or node == :with_changes or node == :most_differences or node == :pull_output or node == :date or node == :fact_search
       format.node_summary_header(node,summary,:node_percentage) + summary.collect do |header,value|
         next if value.nil?
         if value.is_a?(Hash)
