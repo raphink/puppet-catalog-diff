@@ -37,7 +37,7 @@ module Puppet::CatalogDiff
       server,environment = server.split('/')
       environment ||= lookup_environment(node_name)
       endpoint = "/#{environment}/catalog/#{node_name}"
-      Puppet.debug("Connecting to server: #{server}")
+      Puppet.debug("Connecting to server: #{server}#{endpoint}")
       begin
         connection = Puppet::Network::HttpPool.http_instance(server,'8140')
         catalog = connection.request_get(endpoint, {"Accept" => 'pson'}).body
