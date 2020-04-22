@@ -7,9 +7,9 @@ module Puppet::CatalogDiff
       @node_name = node_name
       catalog = compile_catalog(node_name,server)
       begin
-        PSON.parse(catalog)
+        p = PSON.parse(catalog)
         save_catalog_to_disk(save_directory,node_name,catalog,'pson')
-        if catalog.has_key?('issue_kind')
+        if p.has_key?('issue_kind')
           raise c.message
         end
       rescue Exception => e
